@@ -1,0 +1,232 @@
+@font-face {
+    font-family: "Messapia";
+    src: url(../assets/fonts/messapia-bold.woff2);
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+        transform: translate(0, 24px) scale(0.95);
+        /* clip-path: polygon(0% 0%, 100% 0, 100% 0, 0% 0%); */
+        /* start at top and start at bottom*/
+        clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+}
+
+@keyframes intro-box {
+    0% {
+        background-color: #ffffff;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+@keyframes grow-box {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    40% {
+        width: 360px;
+        height: 200px;
+    }
+
+    100% {
+        width: 100%;
+        height: 100%;
+        border-color: transparent;
+    }
+}
+
+body {
+    font-family: Messapia;
+    font-size: 16px;
+    line-height: 1.2;
+    text-transform: uppercase;
+
+    background-color: #ffffff;
+    color: #333;
+}
+
+/*
+    Each section becomes sticky when top value is 0
+*/
+section {
+    font-family: Messapia;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* text-align: center; */
+    background-color: red;
+    background-image: linear-gradient(120deg, #97ebd6, #9aa6f9);
+
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+
+}
+
+section.alternate {
+    background-image: linear-gradient(30deg, #dc72ef, #fe0000);
+    /* You can play around with values here: top: 40px; */
+}
+
+section.alternate figcaption {
+    color: black;
+}
+
+/*
+    Figure is now the whole area of section
+*/
+figure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 120px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    perspective: 800px;
+    /* A distance in the z Direction: Smaller number creates a bigger rotation & bigger n creates a smaller rotation */
+}
+
+/*
+    Two layer effect is used to apply rotation to div
+    but also the animation to the div's image
+*/
+figure div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* transform: rotateX(20deg) rotateY(20deg); */
+}
+
+figure img {
+    max-height: 100%;
+}
+
+/*
+    Since each caption is using position fixed
+    There will be overlapping of captions because the browser will still read it at
+    the set top value.
+
+    clip-path solves this issue and we will make clip path the area of the section
+    that way each caption stays in their respective section and not cause overlap in the first one
+*/
+figcaption {
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    width: 100%;
+    color: #fff;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+h1 {
+    font-size: 120px;
+}
+
+p {
+    font-size: 64px;
+}
+
+/** Accessiblity: if user chooses to not show animation****/
+@media (prefers-reduced-motion: no-preference) {
+    section.in-view img {
+        animation: show 0.4s 0.4s both cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        /* apply opacity in both directions */
+    }
+
+    div.intro {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 6;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        animation: intro-box 1s 4s both;
+        /* to ignore mouse events */
+        /* opacity: 0.2; */
+    }
+
+    div.intro div.box {
+        width: 360px;
+        height: 200px;
+        border: 1px solid #000000;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 24px;
+        animation: grow-box 2s 3s both;
+    }
+
+    div.intro div.column {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) or (max-width: 900px) {
+
+    div.intro,
+    div.box {
+        animation-delay: 0.001s;
+        animation-duration: 0.001s;
+    }
+}
+
+
+/*
+    If there is prefernce for no motion, and screen smaller than 900px then this code won't run
+    If there is preference for motion and a screen bigger than 900px then this code will run
+*/
+@media (prefers-reduced-motion: no-preference),
+(max-wdth: 900px) {
+    main {
+        height: 100vh;
+        overflow: scroll;
+        /*scroll-snap-type: y mandatory;*/
+    }
+
+    section {
+        /* scroll-snap-align: start; */
+    }
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 48px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    figure {
+        padding: 64px;
+    }
+}
