@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;800&display=swap');
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg);}
+  100% { transform: translate(-50%, -50%) rotate(360deg);}
+}
+
+body {
+  font-family: 'Syne', Arial;
+  font-size: 2rem;
+  line-height: 1.5;
+
+  background-color: #f4e6d8;
+  color: #15403d;
+  margin: 15rem auto 15rem auto;
+  max-width: 70rem;
+  transition: background-color 1s;
+  overflow-x: hidden;
+}
+
+p {
+  font-weight: 800;
+  color: #e5745d;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  z-index: 1;
+}
+
+header img {
+  width: 8.5rem;
+  transition: width 0.5s;
+}
+
+header.scrolled img {
+  width: 4rem;
+}
+
+section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 6rem 0 6rem 0;
+}
+
+section:nth-child(odd) {
+  flex-direction: row-reverse;
+}
+
+section div {
+  padding: 3rem;
+  position: relative;
+}
+
+section img {
+  position: relative;
+}
+
+div.stamps {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+}
+
+div.stamps img {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: spin 30s linear infinite;
+}
